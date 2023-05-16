@@ -25,7 +25,7 @@ export function SearchBar() {
   };
 
   return (
-    <div className="border-[black] overflow-hidden flex flex mx-auto justify-between items-center w-[550px] border-[3px] rounded-[8px] ">
+    <div className="border-[#424242] overflow-hidden flex flex mx-auto justify-between items-center w-[550px] border-[2.2px] rounded-[8px] ">
       <div className="px-[10px] w-[100%]   relative">
         <input
           className="text-[15px] w-[100%]"
