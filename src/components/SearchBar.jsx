@@ -25,8 +25,8 @@ export function SearchBar() {
   };
 
   return (
-    <div className="flex mt-[30px] flex mx-auto justify-between items-center w-[550px] border-[3px] rounded-[8px] border-[#243c5a]">
-      <div className="px-[10px] w-[100%] overflow-hidden  relative  ">
+    <div className="border-[black] overflow-hidden flex flex mx-auto justify-between items-center w-[550px] border-[3px] rounded-[8px] ">
+      <div className="px-[10px] w-[100%]   relative">
         <input
           className="text-[15px] w-[100%]"
           placeholder="Search"
@@ -35,7 +35,7 @@ export function SearchBar() {
           onKeyDown={handleKeyDown}
         />
       </div>
-      <button className="bg-[#243c5a] w-[70px] h-[30px] text-[8px] text-[#ffffff]" onClick={handleSearch}>
+      <button className="bg-[#FFFF64] w-[70px] h-[30px] text-[11px] text-[black]" onClick={handleSearch}>
         SEARCH
       </button>
     </div>
