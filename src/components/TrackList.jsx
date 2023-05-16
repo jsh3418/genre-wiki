@@ -9,12 +9,22 @@ export function TrackList({ data }) {
               <div className="text-[14px]">{track.artist}</div>
               <div className="text-[18px]">{track.name}</div>
             </div>
-            <div className="w-[400px] flex justify-center items-center gap-[30px]">
-              <div>genre</div>
-              <div>genre</div>
-              <div>genre</div>
-              <div>genre</div>
-              <div>genre</div>
+            <div className="w-[400px] flex justify-center items-center gap-[15px]">
+              <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                pop
+              </div>
+              <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                rock
+              </div>
+              <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                hiphop
+              </div>
+              <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                dance
+              </div>
+              <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                house
+              </div>
             </div>
           </li>
         ))}

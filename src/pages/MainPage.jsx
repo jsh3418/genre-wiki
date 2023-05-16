@@ -34,7 +34,7 @@ export function MainPage() {
   return (
     <div>
       <Header />
-      <SearchBar />
+      {/* <SearchBar /> */}
       <TrackList data={data} />
     </div>
   );
