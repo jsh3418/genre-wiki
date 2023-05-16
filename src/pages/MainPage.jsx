@@ -1,5 +1,3 @@
-import { Header } from '../components/Header';
-import { SearchBar } from '../components/SearchBar';
 import { TrackList } from '../components/TrackList';
 
 export function MainPage() {
@@ -33,8 +31,6 @@ export function MainPage() {
 
   return (
     <div>
-      <Header />
-      {/* <SearchBar /> */}
       <TrackList data={data} />
     </div>
   );
