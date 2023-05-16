@@ -1,3 +1,10 @@
+import { SearchBar } from './SearchBar';
+
 export function Header() {
-  return <header className="text-[50px] flex justify-center items-center">GENRE WIKI</header>;
+  return (
+    <header className=" flex flex-col justify-center items-center">
+      <div className="text-[50px]">GENRE WIKI</div>
+      <SearchBar />
+    </header>
+  );
 }
