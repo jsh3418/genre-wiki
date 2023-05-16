@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/MainPage';
 import { SearchPage } from './pages/SearchPage';
 import { Header } from './components/Header';
-import { LoginPage } from './pages/LoginPage';
+import { AuthPage } from './pages/AuthPage';
 
 export function App() {
   return (
@@ -13,7 +13,8 @@ export function App() {
         <Route path="/search" element={<SearchPage />}>
           <Route path="/search/:id" element={<SearchPage />} />
         </Route>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<AuthPage />} />
+        <Route path="/sign-up" element={<AuthPage />} />
       </Routes>
     </BrowserRouter>
   );
