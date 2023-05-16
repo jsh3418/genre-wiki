@@ -4,7 +4,7 @@ export function GenreDetail({ genre, isHidden }) {
   const [recommend, setRecommend] = useState(0);
 
   return (
-    <div className={`flex h-24 mx-auto w-full justify-around items-center ${isHidden && 'hidden'}`}>
+    <div className={`flex h-24 mx-auto w-full justify-around items-center ${isHidden ? 'hidden' : ''}`}>
       <GenreProsCons name={genre.name} pros={genre.prosPercent} cons={genre.consPercent} />
       <UserComment comment={genre.bestComment} />
     </div>

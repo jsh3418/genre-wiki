@@ -18,6 +18,8 @@ function Track({ track, index }) {
   const handleClick = () => {
     setIsHidden((prev) => !prev);
   };
+  const baseGenre = ['pop', 'pop'];
+  const userGenre = ['Deep House', 'Acid Jazz', 'UK Garage', 'user', 'user'];
   const genreData = [
     {
       name: '트로트',
@@ -71,34 +73,19 @@ function Track({ track, index }) {
         </div>
         <div className="px-[20px] flex flex-col justify-center gap-4">
           <div className="flex justify-center items-center gap-[15px]">
-            <div className="flex font-[200] bg-[white] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              pop
-            </div>
-            <div className="flex font-[700] bg-[#FFFF64] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              pop
-            </div>
+            {baseGenre.map((name, i) => (
+              <GenreButton name={name} key={i} />
+            ))}
           </div>
           <div className="flex justify-center items-center gap-[15px]">
-            <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              Deep House
-            </div>
-            <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              Acid Jazz
-            </div>
-            <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              UK Garage
-            </div>
-            <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              user
-            </div>
-            <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-              user
-            </div>
+            {userGenre.map((name, i) => (
+              <GenreButton name={name} key={i} />
+            ))}
           </div>
         </div>
         <button
           onClick={handleClick}
-          className="absolute bottom-1 right-1 h-6 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
+          className="absolute bottom-1 right-1 h-6 px-6 rounded-md border border-slate-200 text-slate-900"
           type="button"
         >
           더보기
@@ -110,5 +97,21 @@ function Track({ track, index }) {
         })}
       </div>
     </li>
+  );
+}
+
+function GenreButton({ name, index }) {
+  const [isSelected, setIsSelected] = useState(false);
+  const handleClick = () => setIsSelected((prev) => !prev);
+
+  return (
+    <div
+      key={index}
+      onClick={handleClick}
+      className="flex font-[200] bg-[white] justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a]"
+      style={{ backgroundColor: isSelected ? '#FFFF64' : '' }}
+    >
+      {name}
+    </div>
   );
 }
