@@ -11,36 +11,27 @@ export function TrackList({ data }) {
             </div>
             <div className="px-[20px] flex flex-col justify-evenly ">
               <div className="flex justify-center items-center gap-[15px]">
-                <div className="flex font-[700] bg-[#FFFF64] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                <div className="flex font-[200] bg-[white] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
                   pop
                 </div>
                 <div className="flex font-[700] bg-[#FFFF64] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  rock
-                </div>
-                <div className="flex font-[700] bg-[#FFFF64] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  hiphop
-                </div>
-                <div className="flex font-[700] bg-[#FFFF64] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  dance
-                </div>
-                <div className="flex font-[700] bg-[#FFFF64] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  house
+                  pop
                 </div>
               </div>
               <div className="flex justify-center items-center gap-[15px]">
-                <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                  Deep House
+                </div>
+                <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                  Acid Jazz
+                </div>
+                <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                  UK Garage
+                </div>
+                <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
                   user
                 </div>
-                <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  user
-                </div>
-                <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  user
-                </div>
-                <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
-                  user
-                </div>
-                <div className="flex font-[200] justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
+                <div className="flex font-[200] min-w-[100px] whitespace-nowrap justify-center text-[15px]  w-[80px] border-[1px] rounded-[25px] border-[#243c5a]">
                   user
                 </div>
               </div>
