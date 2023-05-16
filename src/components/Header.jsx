@@ -1,3 +1,3 @@
 export function Header() {
-  return <header>GENRE WIKI</header>;
+  return <header className="text-[50px] flex justify-center items-center">GENRE WIKI</header>;
 }
