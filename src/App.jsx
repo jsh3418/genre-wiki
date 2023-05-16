@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/MainPage';
 import { SearchPage } from './pages/SearchPage';
 import { Header } from './components/Header';
+import { LoginPage } from './pages/LoginPage';
 
 export function App() {
   return (
@@ -12,6 +13,7 @@ export function App() {
         <Route path="/search" element={<SearchPage />}>
           <Route path="/search/:id" element={<SearchPage />} />
         </Route>
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
