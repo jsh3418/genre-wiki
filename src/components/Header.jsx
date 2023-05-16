@@ -7,8 +7,8 @@ export function Header() {
     navigate('/');
   };
   return (
-    <header className="flex flex-col justify-center items-center">
-      <div className="text-[50px] cursor-pointer" onClick={goHome}>
+    <header className=" flex flex-col justify-center items-center">
+      <div className="text-[50px] my-[25px] cursor-pointer" onClick={goHome}>
         GENRE WIKI
       </div>
       <SearchBar />
