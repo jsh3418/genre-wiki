@@ -3,7 +3,7 @@ import { GenreDetail } from './GenreDetails';
 
 export function TrackList({ data }) {
   return (
-    <div className="mt-[10px] mx-auto relative flex justify-center items-center top-[40px]">
+    <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
         {data.map((track, index) => (
           <Track track={track} key={index} />

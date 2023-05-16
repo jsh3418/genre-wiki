@@ -30,8 +30,8 @@ export function MainPage() {
   ];
 
   return (
-    <div>
+    <main>
       <TrackList data={data} />
-    </div>
+    </main>
   );
 }
