@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseConfig } from '../firebaseKey';
+import { firebaseApp } from '../firebase';
 
 export function AuthPage() {
   const [email, setEmail] = useState('');
@@ -10,13 +9,11 @@ export function AuthPage() {
   const { pathname } = useLocation();
   const [authMode, setAuthMode] = useState(pathname);
   const navigate = useNavigate();
+  const auth = getAuth(firebaseApp);
 
   useEffect(() => {
     setAuthMode(pathname);
   }, [pathname]);
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
 
   const handleLogin = (event) => {
     event.preventDefault();
