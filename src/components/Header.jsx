@@ -1,11 +1,22 @@
+import { useEffect, useState } from 'react';
 import { SearchBar } from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 
 export function Header() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+
+    setIsLogin(!!userId);
+  });
+
   const navigate = useNavigate();
+
   const goHome = () => {
     navigate('/');
   };
+
   const goRegister = (id) => {
     navigate(`/${id}`);
   };
@@ -17,20 +28,35 @@ export function Header() {
       </div>
       <SearchBar />
       <div className="left-[350px] top-[-135px] gap-[8px] relative flex">
-        <button
-          className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+        {isLogin ? (
+          <button
+            className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
         justify-center items-center h-[25px] bg-[#FFFF64]  flex"
-          onClick={() => goRegister('sign-up')}
-        >
-          회원가입
-        </button>
-        <button
-          className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+            onClick={() => {
+              localStorage.removeItem('userId');
+              goHome();
+            }}
+          >
+            로그아웃
+          </button>
+        ) : (
+          <>
+            <button
+              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+        justify-center items-center h-[25px] bg-[#FFFF64]  flex"
+              onClick={() => goRegister('sign-up')}
+            >
+              회원가입
+            </button>
+            <button
+              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
           justify-center items-center h-[25px] bg-[#FFFF64]  flex"
-          onClick={() => goRegister('login')}
-        >
-          로그인
-        </button>
+              onClick={() => goRegister('login')}
+            >
+              로그인
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
