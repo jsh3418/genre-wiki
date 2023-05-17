@@ -1,37 +1,24 @@
+import { useEffect, useState } from 'react';
 import { TrackList } from '../components/TrackList';
+import { firebaseApp } from '../firebase';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 export function MainPage() {
-  const data = [
-    {
-      name: 'I AM',
-      artist: 'IVE',
-      image: 'https://i.scdn.co/image/ab67616d0000b27325ef3cec1eceefd4db2f91c8',
-    },
-    {
-      name: 'UNFORGIVEN',
-      artist: 'LE SSERAFIM',
-      image: 'https://i.scdn.co/image/ab67616d0000b273d71fd77b89d08bc1bda219c7',
-    },
-    {
-      name: 'Kitsch',
-      artist: 'IVE',
-      image: 'https://i.scdn.co/image/ab67616d0000b273204170c6b0db3a42030c5f75',
-    },
-    {
-      name: 'Spicy',
-      artist: 'aespa',
-      image: 'https://i.scdn.co/image/ab67616d0000b27304878afb19613a94d37b29ce',
-    },
-    {
-      name: 'Ditto',
-      artist: 'NewJeans',
-      image: 'https://i.scdn.co/image/ab67616d0000b273edf5b257be1d6593e81bb45f',
-    },
-  ];
+  const [data, setData] = useState([]);
+  const db = getFirestore(firebaseApp);
 
-  return (
-    <main>
-      <TrackList data={data} />
-    </main>
-  );
+  useEffect(() => {
+    (async () => {
+      const querySnapshot = await getDocs(collection(db, 'tracks'));
+      const tempArr = [];
+
+      querySnapshot.forEach((doc) => {
+        tempArr.push(doc.data());
+      });
+
+      setData(tempArr);
+    })();
+  }, []);
+
+  return <main>{<TrackList data={data} />}</main>;
 }
