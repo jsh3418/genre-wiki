@@ -164,7 +164,6 @@ function GenreButton({ name, index, isEdit }) {
       style={{ backgroundColor: isSelected ? '#FFFF64' : '', fontWeight: isSelected ? 650 : 200 }}
     >
       {name}
-      <button></button>
     </button>
   );
 }
