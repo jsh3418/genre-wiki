@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { GenreDetail } from './GenreDetails';
 
 export function TrackList({ data }) {
+  const sorted = data.sort((a, b) => b.totalCount - a.totalCount);
+
   return (
     <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
-        {data.map((track, index) => (
+        {sorted.map((track, index) => (
           <Track track={track} key={index} />
         ))}
       </ul>
@@ -16,22 +18,11 @@ export function TrackList({ data }) {
 function Track({ track, index }) {
   const [isHidden, setIsHidden] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
-  const handleClick = (action) => {
-    switch (action) {
-      case 'edit':
-        setIsEdit((prev) => !prev);
-        console.log('된거');
-        break;
-      case 'more':
-        setIsHidden((prev) => !prev);
-        break;
-      default:
-        break;
-    }
+  const handleClick = () => {
+    setIsHidden((prev) => !prev);
   };
 
-  const baseGenre = ['k-pop', 'pop', 'dance'];
-  const userGenre = ['house', 'deep house', 'Trot', 'user', 'user'];
+  const sortedGenre = track.genre.sort((a, b) => b.count - a.count).map((item) => item.name);
   const genreData = [
     {
       name: '트로트',
@@ -83,27 +74,13 @@ function Track({ track, index }) {
           <div className="text-[14px]">{track.artist}</div>
           <div className="text-[18px]">{track.name}</div>
         </div>
-        <div className=" pr-[120px] flex flex-col justify-center">
-          <div className="flex justify-center items-center h-[50px] gap-[15px]">
-            {baseGenre.map((name, i) => (
-              <GenreButton name={name} key={i} isEdit={isEdit} />
-            ))}
-          </div>
-          <div className="flex justify-center items-center h-[50px] gap-[15px]">
-            {userGenre.map((name, i) => (
-              <GenreButton name={name} key={i} isEdit={isEdit} />
-            ))}
-          </div>
+        <div className="flex justify-center items-center gap-[5px]  p-5 h-[130px] w-[400px] flex-wrap">
+          {sortedGenre.map((name, i) => (
+            <GenreButton name={name} key={i} isEdit={isEdit} />
+          ))}
         </div>
         <button
-          onClick={() => handleClick('edit')}
-          className="absolute text-[black] text-[13px]
-        right-[60px] bottom-[15px] w-[50px] h-[20px] font-[500]  "
-        >
-          수정
-        </button>
-        <button
-          onClick={() => handleClick('more')}
+          onClick={handleClick}
           className="absolute text-[black] text-[13px]
           right-[18px] bottom-[15px] w-[50px] h-[20px] font-[500]  "
           type="button"
@@ -167,7 +144,6 @@ function GenreButton({ name, index, isEdit }) {
 
     setIsSelected((prev) => !prev);
     setGenreCount((prevGenreCount) => {
-      console.log(prevGenreCount);
       const updatedGenreCount = [...prevGenreCount]; // 새로운 배열을 복사합니다
 
       // pop을 찾아 해당 항목의 count 값을 증가시킵니다
@@ -175,7 +151,6 @@ function GenreButton({ name, index, isEdit }) {
       if (countingGenre) {
         countingGenre.count += 1;
       }
-      console.log(updatedGenreCount);
       return updatedGenreCount; // 업데이트된 배열을 반환합니다
     });
   };
