@@ -84,12 +84,12 @@ function Track({ track, index }) {
           <div className="text-[18px]">{track.name}</div>
         </div>
         <div className=" pr-[120px] flex flex-col justify-center">
-          <div className="flex justify-center items-center h-[50px] gap-[15px]">
+          <div className="flex justify-start items-center h-[50px] gap-[15px]">
             {baseGenre.map((name, i) => (
               <GenreButton name={name} key={i} isEdit={isEdit} />
             ))}
           </div>
-          <div className="flex justify-center items-center h-[50px] gap-[15px]">
+          <div className="flex justify-start items-center h-[50px] gap-[15px]">
             {userGenre.map((name, i) => (
               <GenreButton name={name} key={i} isEdit={isEdit} />
             ))}
@@ -180,7 +180,7 @@ function GenreButton({ name, index, isEdit }) {
     });
   };
   return (
-    <div
+    <button
       key={index}
       onClick={handleClick}
       className={`flex bg-[white] justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a] ${
@@ -190,6 +190,6 @@ function GenreButton({ name, index, isEdit }) {
     >
       {name}
       <button></button>
-    </div>
+    </button>
   );
 }
