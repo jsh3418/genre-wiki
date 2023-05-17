@@ -155,7 +155,7 @@ function GenreButton({ name, index, isEdit }) {
     });
   };
   return (
-    <div
+    <button
       key={index}
       onClick={handleClick}
       className={`flex bg-[white] justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a] ${
@@ -165,6 +165,6 @@ function GenreButton({ name, index, isEdit }) {
     >
       {name}
       <button></button>
-    </div>
+    </button>
   );
 }
