@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { firebaseApp } from '../firebase';
 import { GenreDetail } from './GenreDetails';
 
 export function TrackList({ data }) {
@@ -17,12 +19,31 @@ export function TrackList({ data }) {
 
 function Track({ track, index }) {
   const [isHidden, setIsHidden] = useState(true);
-  const [isEdit, setIsEdit] = useState(false);
+  const [genreList, setGenreList] = useState(track.genre);
   const handleClick = () => {
     setIsHidden((prev) => !prev);
   };
+  const handleGenreButtonClick = (name) => {
+    const temp = genreList.map((item) => {
+      if (item.name === name) {
+        item.count++;
+      }
+      return item;
+    });
+    setGenreList(temp);
+  };
 
-  const sortedGenre = track.genre.sort((a, b) => b.count - a.count).map((item) => item.name);
+  useEffect(() => {
+    const db = getFirestore(firebaseApp);
+    const ref = doc(db, 'tracks', track.id);
+
+    updateDoc(ref, {
+      genre: [...genreList],
+      totalCount: track.totalCount++,
+    });
+  }, [genreList]);
+
+  const sortedGenre = genreList.sort((a, b) => b.count - a.count).map((item) => item.name);
   const genreData = [
     {
       name: '트로트',
@@ -76,7 +97,7 @@ function Track({ track, index }) {
         </div>
         <div className="flex justify-center items-center gap-[5px]  p-5 h-[130px] w-[400px] flex-wrap">
           {sortedGenre.map((name, i) => (
-            <GenreButton name={name} key={i} isEdit={isEdit} />
+            <GenreButton name={name} key={i} clickEventHandler={handleGenreButtonClick} />
           ))}
         </div>
         <button
@@ -97,71 +118,18 @@ function Track({ track, index }) {
   );
 }
 
-const genreCountData = [
-  {
-    id: 1,
-    name: 'pop',
-    count: 0,
-  },
-  {
-    id: 2,
-    name: 'dance',
-    count: 0,
-  },
-  {
-    id: 3,
-    name: 'k-pop',
-    count: 0,
-  },
-  {
-    id: 4,
-    name: 'classical',
-    count: 0,
-  },
-  {
-    id: 5,
-    name: 'hip hop',
-    count: 0,
-  },
-  {
-    id: 6,
-    name: 'jazz',
-    count: 0,
-  },
-  {
-    id: 7,
-    name: 'rock',
-    count: 0,
-  },
-];
-
-function GenreButton({ name, index, isEdit }) {
+function GenreButton({ name, index, clickEventHandler }) {
   const [isSelected, setIsSelected] = useState(false);
-  const [genreCount, setGenreCount] = useState(genreCountData);
   const handleClick = (e) => {
-    const target = e.target;
-    const selectGenre = target.textContent;
-
     setIsSelected((prev) => !prev);
-    setGenreCount((prevGenreCount) => {
-      const updatedGenreCount = [...prevGenreCount]; // 새로운 배열을 복사합니다
-
-      // pop을 찾아 해당 항목의 count 값을 증가시킵니다
-      const countingGenre = updatedGenreCount.find((genre) => genre.name === selectGenre);
-      if (countingGenre) {
-        countingGenre.count += 1;
-      }
-      return updatedGenreCount; // 업데이트된 배열을 반환합니다
-    });
+    clickEventHandler(name);
   };
+
   return (
     <button
       key={index}
       onClick={handleClick}
-      className={`flex bg-[white] justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a] ${
-        isEdit ? 'animate-shake' : ''
-      }`}
-      style={{ backgroundColor: isSelected ? '#FFFF64' : '', fontWeight: isSelected ? 650 : 200 }}
+      className="flex bg-[white] justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a]"
     >
       {name}
     </button>
