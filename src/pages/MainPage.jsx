@@ -3,7 +3,7 @@ import { TrackList } from '../components/TrackList';
 import { firebaseApp } from '../firebase';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
-export function MainPage() {
+export function MainPage({ userId }) {
   const [data, setData] = useState([]);
   const db = getFirestore(firebaseApp);
 
@@ -20,5 +20,5 @@ export function MainPage() {
     })();
   }, []);
 
-  return <main>{<TrackList data={data} />}</main>;
+  return <main>{<TrackList data={data} userId={userId} />}</main>;
 }

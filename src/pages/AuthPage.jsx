@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseApp } from '../firebase';
 
-export function AuthPage() {
+export function AuthPage({ setUserId }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { pathname } = useLocation();
@@ -20,7 +20,6 @@ export function AuthPage() {
 
     if (authMode === '/login') {
       login(email, password);
-
       return;
     }
 
@@ -32,6 +31,7 @@ export function AuthPage() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       localStorage.setItem('userId', userCredential.user.uid);
+      setUserId(userCredential.user.uid);
       navigate('/');
     } catch (error) {
       if (error.code === 'auth/invalid-email') {
@@ -60,6 +60,7 @@ export function AuthPage() {
 
       localStorage.setItem('userId', response.user.uid);
 
+      setUserId(response.user.uid);
       navigate('/');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
