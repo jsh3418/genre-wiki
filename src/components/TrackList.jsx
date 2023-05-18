@@ -102,7 +102,7 @@ function Track({ track, userData, index, userId }) {
 
   return (
     <li className="flex-col rounded-[8px] shadow-[0_4px_24px_rgba(48,62,75,.06)]" key={index}>
-      <button className={`flex relative ${isHidden ? 'overflow-hidden' : ''}`}>
+      <div className={`flex relative ${isHidden ? 'overflow-hidden' : ''}`}>
         <img className="w-[150px] h-[150px]" src={track.image} alt={track.name} />
         <div className="justify-center items-center flex flex-col w-[150px] h-[150px]">
           <button className="text-[14px]">{track.artist}</button>
@@ -126,7 +126,7 @@ function Track({ track, userData, index, userId }) {
         >
           {isHidden ? '더보기' : '접기'}
         </button>
-      </button>
+      </div>
       <div className={`w-full transition-all duration-500 ease-in-out ${isHidden ? '' : 'mb-[50px]'}`}>
         {isHidden ? (
           ''
