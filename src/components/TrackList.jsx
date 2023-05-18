@@ -1,7 +1,8 @@
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { GenreDetail } from './GenreDetails';
+import { TrackInfo } from './TrackInfo';
 
 export function TrackList({ data, userId }) {
   const sortedData = data.sort((a, b) => b.totalCount - a.totalCount);
@@ -101,11 +102,7 @@ function Track({ track, userData, index, userId }) {
   return (
     <li className="flex-col rounded-[8px] shadow-[0_4px_24px_rgba(48,62,75,.06)]" key={index}>
       <div className={`flex relative ${isHidden ? 'overflow-hidden' : ''}`}>
-        <img className="w-[150px] h-[150px]" src={track.image} alt={track.name} />
-        <div className="justify-center items-center flex flex-col w-[150px] h-[150px]">
-          <button className="text-[14px]">{track.artist}</button>
-          <button className="text-[18px]">{track.name}</button>
-        </div>
+        <TrackInfo track={track} />
         <div className="flex justify-center py-[35px] items-center gap-[12px]  p-5 h-[130px] w-[400px] flex-wrap">
           {sortedGenre.map((name, i) => (
             <GenreButton
