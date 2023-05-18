@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import { doc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { TrackInfo } from './TrackInfo';
 import { GenreDetail } from './GenreDetails';
 
 export function Track({ track, userData, index, userId }) {
   const [isHidden, setIsHidden] = useState(true);
   const [genreList, setGenreList] = useState(track.genre);
+
+  useEffect(() => {
+    updateGenreCount();
+  }, [genreList]);
 
   const userVotedGenres = [];
   if (userData.votedGenre && track.id in userData.votedGenre) {
@@ -31,11 +35,10 @@ export function Track({ track, userData, index, userId }) {
     });
 
     setGenreList(newGenreList);
-    updateGenreCount(genreList);
     updateUserData(isVoted, name);
   };
 
-  const updateGenreCount = (genreList) => {
+  const updateGenreCount = () => {
     const tracksRef = doc(db, 'tracks', track.id);
 
     updateDoc(tracksRef, {

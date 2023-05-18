@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseApp } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { db, firebaseApp } from '../firebase';
 
 export function AuthPage({ setUserId }) {
   const [email, setEmail] = useState('');
@@ -58,6 +59,10 @@ export function AuthPage({ setUserId }) {
   const createUser = async (email, password) => {
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
+
+      setDoc(doc(db, 'users', response.user.uid), {
+        votedGenre: {},
+      });
 
       localStorage.setItem('userId', response.user.uid);
       setUserId(response.user.uid);
