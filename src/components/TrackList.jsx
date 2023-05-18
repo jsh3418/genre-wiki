@@ -1,5 +1,5 @@
 import { doc, getFirestore, updateDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { firebaseApp } from '../firebase';
 import { GenreDetail } from './GenreDetails';
 
@@ -23,6 +23,7 @@ function Track({ track, index }) {
   const handleClick = () => {
     setIsHidden((prev) => !prev);
   };
+
   const handleGenreButtonClick = (name) => {
     const temp = genreList.map((item) => {
       if (item.name === name) {
@@ -31,61 +32,16 @@ function Track({ track, index }) {
       return item;
     });
     setGenreList(temp);
-  };
 
-  useEffect(() => {
     const db = getFirestore(firebaseApp);
     const ref = doc(db, 'tracks', track.id);
-
     updateDoc(ref, {
       genre: [...genreList],
       totalCount: track.totalCount++,
     });
-  }, [genreList]);
+  };
 
   const sortedGenre = genreList.sort((a, b) => b.count - a.count).map((item) => item.name);
-  const genreData = [
-    {
-      name: '트로트',
-      prosPercent: 25,
-      consPercent: 75,
-      bestComment: {
-        content: '아이브가 트로트가 아니면 무엇이 트로트인가?',
-      },
-    },
-    {
-      name: 'genre2',
-      prosPercent: 30,
-      consPercent: 70,
-      bestComment: {
-        content: '아이브가 트로트가 아니면 무엇이 트로트인가?',
-      },
-    },
-    {
-      name: 'genre3',
-      prosPercent: 50,
-      consPercent: 50,
-      bestComment: {
-        content: '아이브가 트로트가 아니면 무엇이 트로트인가?',
-      },
-    },
-    {
-      name: 'genre4',
-      prosPercent: 45,
-      consPercent: 55,
-      bestComment: {
-        content: '아이브가 트로트가 아니면 무엇이 트로트인가?',
-      },
-    },
-    {
-      name: 'genre5',
-      prosPercent: 15,
-      consPercent: 85,
-      bestComment: {
-        content: '아이브가 트로트가 아니면 무엇이 트로트인가?',
-      },
-    },
-  ];
 
   return (
     <li className="flex-col rounded-[8px] shadow-[0_4px_24px_rgba(48,62,75,.06)]" key={index}>
@@ -110,8 +66,10 @@ function Track({ track, index }) {
         </button>
       </div>
       <div className="w-full">
-        {genreData.map((data, index) => {
-          return <GenreDetail isHidden={isHidden} genre={data} key={index} />;
+        {isHidden ? '' : <div>{track.totalCount}</div>}
+
+        {genreList.map((data, index) => {
+          return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
         })}
       </div>
     </li>
