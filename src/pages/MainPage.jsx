@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react';
 import { TrackList } from '../components/TrackList';
-import { firebaseApp } from '../firebase';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export function MainPage({ userId }) {
   const [data, setData] = useState([]);
-  const db = getFirestore(firebaseApp);
 
   useEffect(() => {
     (async () => {
       const querySnapshot = await getDocs(collection(db, 'tracks'));
-      const tempArr = [];
+      const snapshotData = [];
 
       querySnapshot.forEach((doc) => {
-        tempArr.push(doc.data());
+        snapshotData.push(doc.data());
       });
 
-      setData(tempArr);
+      setData(snapshotData);
     })();
   }, []);
 

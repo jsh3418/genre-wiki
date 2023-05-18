@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 export function GenreDetail({ genreList, isHidden, total }) {
-  const [recommend, setRecommend] = useState(0);
   return (
     <div
       className={`flex mx-auto w-full justify-around items-center overflow-hidden transition-all duration-500 ease-in-out ${
@@ -14,16 +13,6 @@ export function GenreDetail({ genreList, isHidden, total }) {
   );
 }
 
-function UserComment({ comment }) {
-  return (
-    <div>
-      <img src="" alt="" />
-      <span className="font-extrabold">BEST COMMENT</span>
-      <p>{comment.content}</p>
-    </div>
-  );
-}
-
 function GenreProsCons({ name, cons, isHidden, total }) {
   const consWidth = `calc(${(cons / total) * 100}%)`;
   const [consStyleWidth, setConsStyleWidth] = useState(isHidden ? '0' : consWidth);
@@ -31,12 +20,13 @@ function GenreProsCons({ name, cons, isHidden, total }) {
   useEffect(() => {
     if (isHidden) {
       setConsStyleWidth('0');
-    } else {
-      const timer = setTimeout(() => {
-        setConsStyleWidth(consWidth);
-      }, 500);
-      return () => clearTimeout(timer);
+
+      return;
     }
+
+    setTimeout(() => {
+      setConsStyleWidth(consWidth);
+    }, 500);
   }, [isHidden, consWidth]);
 
   return (

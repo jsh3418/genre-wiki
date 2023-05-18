@@ -1,16 +1,16 @@
-import { doc, getFirestore, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { firebaseApp } from '../firebase';
+import { db } from '../firebase';
 import { GenreDetail } from './GenreDetails';
 
 export function TrackList({ data, userId }) {
-  const sorted = data.sort((a, b) => b.totalCount - a.totalCount);
+  const sortedData = data.sort((a, b) => b.totalCount - a.totalCount);
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
     if (userId) {
-      const db = getFirestore(firebaseApp);
       const ref = doc(db, 'users', userId);
+
       (async () => {
         const querySnapshot = await getDoc(ref);
         const querySnapshotData = querySnapshot.data();
@@ -23,7 +23,7 @@ export function TrackList({ data, userId }) {
   return (
     <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
-        {sorted.map((track, index) => (
+        {sortedData.map((track, index) => (
           <Track track={track} userData={userData} key={index} userId={userId} />
         ))}
       </ul>
@@ -32,44 +32,51 @@ export function TrackList({ data, userId }) {
 }
 
 function Track({ track, userData, index, userId }) {
-  const arr = [];
-  if (userData.votedGenre && track.id in userData.votedGenre) {
-    arr.push(...userData.votedGenre[track.id]);
-  }
-
   const [isHidden, setIsHidden] = useState(true);
   const [genreList, setGenreList] = useState(track.genre);
-  const handleClick = () => {
-    setIsHidden((prev) => !prev);
+
+  const userVotedGenres = [];
+  if (userData.votedGenre && track.id in userData.votedGenre) {
+    userVotedGenres.push(...userData.votedGenre[track.id]);
+  }
+
+  const handleSeeMoreClick = () => {
+    setIsHidden(!isHidden);
   };
 
   const handleGenreButtonClick = (name) => {
     const isVoted = checkVotedGenre(userData.votedGenre[track.id], name);
 
-    const temp = genreList.map((item) => {
-      if (item.name === name) {
-        if (isVoted) {
-          item.count--;
-          track.totalCount--;
-        } else {
-          item.count++;
-          track.totalCount++;
-        }
+    const newGenreList = genreList.map((item) => {
+      if (isVoted && item.name === name) {
+        item.count -= 1;
+        track.totalCount -= 1;
+      } else {
+        item.count += 1;
+        track.totalCount += 1;
       }
+
       return item;
     });
-    setGenreList(temp);
 
-    const db = getFirestore(firebaseApp);
+    setGenreList(newGenreList);
+    updateGenreCount(genreList);
+    updateUserData(isVoted, name);
+  };
+
+  const updateGenreCount = (genreList) => {
     const tracksRef = doc(db, 'tracks', track.id);
+
     updateDoc(tracksRef, {
       genre: [...genreList],
       totalCount: track.totalCount,
     });
+  };
 
+  const updateUserData = (isVoted, name) => {
     const usersRef = doc(db, 'users', userId);
     const newUserData = Object.assign(userData);
-    console.log(newUserData);
+
     if (isVoted) {
       if (newUserData.votedGenre[track.id].length === 1) {
         delete newUserData.votedGenre[track.id];
@@ -83,6 +90,7 @@ function Track({ track, userData, index, userId }) {
         newUserData.votedGenre[track.id] = [name];
       }
     }
+
     updateDoc(usersRef, newUserData);
   };
 
@@ -106,12 +114,12 @@ function Track({ track, userData, index, userId }) {
               name={name}
               key={i}
               clickEventHandler={handleGenreButtonClick}
-              voted={arr.find((element) => element === name)}
+              voted={userVotedGenres.find((element) => element === name)}
             />
           ))}
         </div>
         <button
-          onClick={handleClick}
+          onClick={handleSeeMoreClick}
           className="absolute text-[black] text-[13px]
           right-[18px] bottom-[15px] w-[50px] h-[20px] font-[500]  "
           type="button"
@@ -132,15 +140,15 @@ function Track({ track, userData, index, userId }) {
 
 function GenreButton({ name, index, clickEventHandler, voted }) {
   const [isSelected, setIsSelected] = useState(voted);
-  const handleClick = (e) => {
-    setIsSelected((prev) => !prev);
+  const handleGenreButtonClick = () => {
+    setIsSelected(!isSelected);
     clickEventHandler(name);
   };
 
   return (
     <button
       key={index}
-      onClick={handleClick}
+      onClick={handleGenreButtonClick}
       className={`flex justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a] ${
         isSelected ? 'bg-[#FFFF64]' : 'bg-[white]'
       }`}

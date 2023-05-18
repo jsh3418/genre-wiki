@@ -15,11 +15,12 @@ export function AuthPage({ setUserId }) {
     setAuthMode(pathname);
   }, [pathname]);
 
-  const handleLogin = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
 
     if (authMode === '/login') {
       login(email, password);
+
       return;
     }
 
@@ -59,7 +60,6 @@ export function AuthPage({ setUserId }) {
       const response = await createUserWithEmailAndPassword(auth, email, password);
 
       localStorage.setItem('userId', response.user.uid);
-
       setUserId(response.user.uid);
       navigate('/');
     } catch (error) {
@@ -105,7 +105,7 @@ export function AuthPage({ setUserId }) {
       </div>
       <button
         className="my-[30px] border-[1.8px] border-[#969696] mx-auto w-[350px] h-[50px] bg-[#ffff64] font-[700]"
-        onClick={handleLogin}
+        onClick={handleFormSubmit}
       >
         {authMode === '/login' ? '로그인' : '회원가입'}
       </button>
