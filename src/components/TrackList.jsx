@@ -33,7 +33,8 @@ export function TrackList({ data, userId }) {
 
 function Track({ track, userData, index }) {
   const arr = [];
-  if (track.id in userData.votedGenre) {
+
+  if (userData.votedGenre && track.id in userData.votedGenre) {
     arr.push(...userData.votedGenre[track.id]);
   }
 
