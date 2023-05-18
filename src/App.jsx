@@ -5,9 +5,12 @@ import { AuthPage } from './pages/AuthPage';
 import { MainPage } from './pages/MainPage';
 import { MyPage } from './pages/MyPage';
 import { SearchPage } from './pages/SearchPage';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 export function App() {
   const [userId, setUserId] = useState('');
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const id = localStorage.getItem('userId') ?? '';
@@ -15,11 +18,24 @@ export function App() {
     setUserId(id);
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      const ref = doc(db, 'users', userId);
+
+      (async () => {
+        const querySnapshot = await getDoc(ref);
+        const querySnapshotData = querySnapshot.data();
+
+        setUserData(querySnapshotData);
+      })();
+    }
+  }, [userId]);
+
   return (
     <BrowserRouter>
-      <Header setUserId={setUserId} />
+      <Header setUserId={setUserId} setUserData={setUserData} />
       <Routes>
-        <Route path="/" element={<MainPage userId={userId} />} />
+        <Route path="/" element={<MainPage userData={userData} userId={userId} />} />
         <Route path="/search" element={<SearchPage />}>
           <Route path="/search/:id" element={<SearchPage />} />
         </Route>

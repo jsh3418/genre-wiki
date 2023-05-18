@@ -131,9 +131,7 @@ export function Track({ track, userData, index, userId }) {
 }
 
 function GenreButton({ name, index, clickEventHandler, voted }) {
-  const [isSelected, setIsSelected] = useState(voted);
   const handleGenreButtonClick = () => {
-    setIsSelected(!isSelected);
     clickEventHandler(name);
   };
 
@@ -143,7 +141,7 @@ function GenreButton({ name, index, clickEventHandler, voted }) {
       onClick={handleGenreButtonClick}
       className={`flex justify-center text-[15px] w-[100px]
       hover:scale-[113%] transition duration-[300]
-      border-[1px] rounded-[25px] border-[#243c5a] ${isSelected ? 'bg-[#FFFF64]' : 'bg-[white]'}`}
+      border-[1px] rounded-[25px] border-[#243c5a] ${voted ? 'bg-[#FFFF64]' : 'bg-[white]'}`}
     >
       {name}
     </button>
