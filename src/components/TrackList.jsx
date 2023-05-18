@@ -44,9 +44,17 @@ function Track({ track, userData, index, userId }) {
   };
 
   const handleGenreButtonClick = (name) => {
+    const isVoted = checkVotedGenre(userData.votedGenre[track.id], name);
+
     const temp = genreList.map((item) => {
       if (item.name === name) {
-        item.count++;
+        if (isVoted) {
+          item.count--;
+          track.totalCount--;
+        } else {
+          item.count++;
+          track.totalCount++;
+        }
       }
       return item;
     });
@@ -56,18 +64,30 @@ function Track({ track, userData, index, userId }) {
     const tracksRef = doc(db, 'tracks', track.id);
     updateDoc(tracksRef, {
       genre: [...genreList],
-      totalCount: track.totalCount++,
+      totalCount: track.totalCount,
     });
 
     const usersRef = doc(db, 'users', userId);
     const newUserData = Object.assign(userData);
-    if (newUserData.votedGenre.hasOwnProperty(track.id)) {
-      newUserData.votedGenre[track.id].push(name);
+    console.log(newUserData);
+    if (isVoted) {
+      if (newUserData.votedGenre[track.id].length === 1) {
+        delete newUserData.votedGenre[track.id];
+      } else {
+        newUserData.votedGenre[track.id] = newUserData.votedGenre[track.id].filter((genre) => genre !== name);
+      }
     } else {
-      newUserData.votedGenre[track.id] = [name];
+      if (newUserData.votedGenre.hasOwnProperty(track.id)) {
+        newUserData.votedGenre[track.id].push(name);
+      } else {
+        newUserData.votedGenre[track.id] = [name];
+      }
     }
-
     updateDoc(usersRef, newUserData);
+  };
+
+  const checkVotedGenre = (votedGenre, name) => {
+    return votedGenre?.includes(name);
   };
 
   const sortedGenre = genreList.sort((a, b) => b.count - a.count).map((item) => item.name);
