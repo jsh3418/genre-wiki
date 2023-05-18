@@ -94,7 +94,7 @@ function Track({ track, userData, index, userId }) {
 
   return (
     <li className="flex-col rounded-[8px] shadow-[0_4px_24px_rgba(48,62,75,.06)]" key={index}>
-      <button className="flex relative">
+      <button className={`flex relative ${isHidden ? 'overflow-hidden' : ''}`}>
         <img className="w-[150px] h-[150px]" src={track.image} alt={track.name} />
         <div className="justify-center items-center flex flex-col w-[150px] h-[150px]">
           <button className="text-[14px]">{track.artist}</button>
@@ -119,7 +119,7 @@ function Track({ track, userData, index, userId }) {
           {isHidden ? '더보기' : '접기'}
         </button>
       </button>
-      <div className={`w-full ${isHidden ? '' : 'mb-[50px]'}`}>
+      <div className={`w-full overflow-hidden ${isHidden ? '' : 'mb-[50px]'}`}>
         {isHidden ? (
           ''
         ) : (
@@ -127,13 +127,13 @@ function Track({ track, userData, index, userId }) {
             Total {track.totalCount}
           </div>
         )}
-        <div className="flex p-[20px]">
-          <div className="detail-list">
-            {genreList.map((data, index) => {
-              return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
-            })}
-          </div>
+        {/* <div className="flex p-[20px]"> */}
+        <div className="detail-list  mt-[30px]">
+          {genreList.map((data, index) => {
+            return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
+          })}
         </div>
+        {/* </div> */}
       </div>
     </li>
   );
