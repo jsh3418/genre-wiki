@@ -24,16 +24,15 @@ export function TrackList({ data, userId }) {
     <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
         {sorted.map((track, index) => (
-          <Track track={track} userData={userData} key={index} />
+          <Track track={track} userData={userData} key={index} userId={userId} />
         ))}
       </ul>
     </div>
   );
 }
 
-function Track({ track, userData, index }) {
+function Track({ track, userData, index, userId }) {
   const arr = [];
-
   if (userData.votedGenre && track.id in userData.votedGenre) {
     arr.push(...userData.votedGenre[track.id]);
   }
@@ -54,11 +53,21 @@ function Track({ track, userData, index }) {
     setGenreList(temp);
 
     const db = getFirestore(firebaseApp);
-    const ref = doc(db, 'tracks', track.id);
-    updateDoc(ref, {
+    const tracksRef = doc(db, 'tracks', track.id);
+    updateDoc(tracksRef, {
       genre: [...genreList],
       totalCount: track.totalCount++,
     });
+
+    const usersRef = doc(db, 'users', userId);
+    const newUserData = Object.assign(userData);
+    if (newUserData.votedGenre.hasOwnProperty(track.id)) {
+      newUserData.votedGenre[track.id].push(name);
+    } else {
+      newUserData.votedGenre[track.id] = [name];
+    }
+
+    updateDoc(usersRef, newUserData);
   };
 
   const sortedGenre = genreList.sort((a, b) => b.count - a.count).map((item) => item.name);
