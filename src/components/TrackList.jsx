@@ -48,12 +48,10 @@ function Track({ track, userData, index, userId }) {
     const isVoted = checkVotedGenre(userData.votedGenre[track.id], name);
 
     const newGenreList = genreList.map((item) => {
-      if (isVoted && item.name === name) {
-        item.count -= 1;
-        track.totalCount -= 1;
-      } else {
-        item.count += 1;
-        track.totalCount += 1;
+      if (item.name === name) {
+        const increment = isVoted ? -1 : 1;
+        item.count += increment;
+        track.totalCount += increment;
       }
 
       return item;
