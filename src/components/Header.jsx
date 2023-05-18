@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchBar } from './SearchBar';
 
-export function Header() {
+export function Header({ setUserId }) {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ export function Header() {
               className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
         justify-center items-center h-[25px] bg-[#FFFF64]  flex"
               onClick={() => {
+                setUserId('');
                 localStorage.removeItem('userId');
                 navigate('/');
               }}

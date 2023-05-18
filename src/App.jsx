@@ -17,7 +17,7 @@ export function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      <Header setUserId={setUserId} />
       <Routes>
         <Route path="/" element={<MainPage userId={userId} />} />
         <Route path="/search" element={<SearchPage />}>
