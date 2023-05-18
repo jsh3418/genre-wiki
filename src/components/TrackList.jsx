@@ -1,23 +1,42 @@
-import { doc, getFirestore, updateDoc } from 'firebase/firestore';
-import { useState } from 'react';
+import { doc, getFirestore, updateDoc, getDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { firebaseApp } from '../firebase';
 import { GenreDetail } from './GenreDetails';
 
-export function TrackList({ data }) {
+export function TrackList({ data, userId }) {
   const sorted = data.sort((a, b) => b.totalCount - a.totalCount);
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    if (userId) {
+      const db = getFirestore(firebaseApp);
+      const ref = doc(db, 'users', userId);
+      (async () => {
+        const querySnapshot = await getDoc(ref);
+        const querySnapshotData = querySnapshot.data();
+
+        setUserData(querySnapshotData);
+      })();
+    }
+  }, [userId]);
 
   return (
     <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
         {sorted.map((track, index) => (
-          <Track track={track} key={index} />
+          <Track track={track} userData={userData} key={index} />
         ))}
       </ul>
     </div>
   );
 }
 
-function Track({ track, index }) {
+function Track({ track, userData, index }) {
+  const arr = [];
+  if (track.id in userData.votedGenre) {
+    arr.push(...userData.votedGenre[track.id]);
+  }
+
   const [isHidden, setIsHidden] = useState(true);
   const [genreList, setGenreList] = useState(track.genre);
   const handleClick = () => {
@@ -53,7 +72,12 @@ function Track({ track, index }) {
         </div>
         <div className="flex justify-center items-center gap-[5px]  p-5 h-[130px] w-[400px] flex-wrap">
           {sortedGenre.map((name, i) => (
-            <GenreButton name={name} key={i} clickEventHandler={handleGenreButtonClick} />
+            <GenreButton
+              name={name}
+              key={i}
+              clickEventHandler={handleGenreButtonClick}
+              voted={arr.find((element) => element === name)}
+            />
           ))}
         </div>
         <button
@@ -76,8 +100,8 @@ function Track({ track, index }) {
   );
 }
 
-function GenreButton({ name, index, clickEventHandler }) {
-  const [isSelected, setIsSelected] = useState(false);
+function GenreButton({ name, index, clickEventHandler, voted }) {
+  const [isSelected, setIsSelected] = useState(voted);
   const handleClick = (e) => {
     setIsSelected((prev) => !prev);
     clickEventHandler(name);
@@ -87,7 +111,9 @@ function GenreButton({ name, index, clickEventHandler }) {
     <button
       key={index}
       onClick={handleClick}
-      className="flex bg-[white] justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a]"
+      className={`flex justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a] ${
+        isSelected ? 'bg-[#FFFF64]' : 'bg-[white]'
+      }`}
     >
       {name}
     </button>
