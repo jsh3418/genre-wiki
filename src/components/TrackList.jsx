@@ -94,13 +94,13 @@ function Track({ track, userData, index, userId }) {
 
   return (
     <li className="flex-col rounded-[8px] shadow-[0_4px_24px_rgba(48,62,75,.06)]" key={index}>
-      <div className="flex relative">
+      <button className="flex relative">
         <img className="w-[150px] h-[150px]" src={track.image} alt={track.name} />
         <div className="justify-center items-center flex flex-col w-[150px] h-[150px]">
-          <div className="text-[14px]">{track.artist}</div>
-          <div className="text-[18px]">{track.name}</div>
+          <button className="text-[14px]">{track.artist}</button>
+          <button className="text-[18px]">{track.name}</button>
         </div>
-        <div className="flex justify-center items-center gap-[5px]  p-5 h-[130px] w-[400px] flex-wrap">
+        <div className="flex justify-center py-[35px] items-center gap-[12px]  p-5 h-[130px] w-[400px] flex-wrap">
           {sortedGenre.map((name, i) => (
             <GenreButton
               name={name}
@@ -118,13 +118,22 @@ function Track({ track, userData, index, userId }) {
         >
           {isHidden ? '더보기' : '접기'}
         </button>
-      </div>
-      <div className="w-full">
-        {isHidden ? '' : <div>{track.totalCount}</div>}
-
-        {genreList.map((data, index) => {
-          return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
-        })}
+      </button>
+      <div className={`w-full ${isHidden ? '' : 'mb-[50px]'}`}>
+        {isHidden ? (
+          ''
+        ) : (
+          <div className="flex relative top-[15px] italic left-[25px] font-[200] text-[30px]">
+            Total {track.totalCount}
+          </div>
+        )}
+        <div className="flex p-[20px]">
+          <div className="detail-list">
+            {genreList.map((data, index) => {
+              return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
+            })}
+          </div>
+        </div>
       </div>
     </li>
   );
@@ -141,9 +150,9 @@ function GenreButton({ name, index, clickEventHandler, voted }) {
     <button
       key={index}
       onClick={handleClick}
-      className={`flex justify-center text-[15px] w-[100px] border-[1px] rounded-[25px] border-[#243c5a] ${
-        isSelected ? 'bg-[#FFFF64]' : 'bg-[white]'
-      }`}
+      className={`flex justify-center text-[15px] w-[100px]
+      hover:scale-[113%] transition duration-[300]
+      border-[1px] rounded-[25px] border-[#243c5a] ${isSelected ? 'bg-[#FFFF64]' : 'bg-[white]'}`}
     >
       {name}
     </button>
