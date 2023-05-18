@@ -3,10 +3,12 @@ import { db } from '../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { TrackInfo } from './TrackInfo';
 import { GenreDetail } from './GenreDetails';
+import { useNavigate } from 'react-router-dom';
 
 export function Track({ track, userData, index, userId }) {
   const [isHidden, setIsHidden] = useState(true);
   const [genreList, setGenreList] = useState(track.genre);
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateGenreCount();
@@ -22,6 +24,16 @@ export function Track({ track, userData, index, userId }) {
   };
 
   const handleGenreButtonClick = (name) => {
+    if (!userId) {
+      if (confirm('로그인해야 투표할 수 있습니다. 로그인 페이지로 이동하시겠습니까?')) {
+        navigate('/login');
+
+        return;
+      }
+
+      return;
+    }
+
     const isVoted = checkVotedGenre(userData.votedGenre[track.id], name);
 
     const newGenreList = genreList.map((item) => {
