@@ -61,7 +61,7 @@ export function AuthPage({ setUserId }) {
       const response = await createUserWithEmailAndPassword(auth, email, password);
 
       setDoc(doc(db, 'users', response.user.uid), {
-        votedGenre: [],
+        votedGenre: {},
       });
 
       localStorage.setItem('userId', response.user.uid);
