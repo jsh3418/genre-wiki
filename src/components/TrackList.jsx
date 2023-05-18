@@ -119,16 +119,19 @@ function Track({ track, userData, index, userId }) {
           {isHidden ? '더보기' : '접기'}
         </button>
       </button>
-      <div className={`w-full overflow-hidden ${isHidden ? '' : 'mb-[50px]'}`}>
+      <div className={`w-full transition-all duration-500 ease-in-out ${isHidden ? '' : 'mb-[50px]'}`}>
         {isHidden ? (
           ''
         ) : (
-          <div className="flex relative top-[15px] italic left-[25px] font-[200] text-[30px]">
+          <div
+            className="flex relative top-[15px] italic left-[25px] font-[200]
+          text-[30px] "
+          >
             Total {track.totalCount}
           </div>
         )}
         {/* <div className="flex p-[20px]"> */}
-        <div className="detail-list  mt-[30px]">
+        <div className={`detail-list  mt-${isHidden ? '' : '[30px]'}`}>
           {genreList.map((data, index) => {
             return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
           })}
