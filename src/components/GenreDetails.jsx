@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
-export function GenreDetail({ genre, isHidden }) {
+export function GenreDetail({ genreList, isHidden, total }) {
   const [recommend, setRecommend] = useState(0);
-
   return (
     <div
       className={`flex mx-auto w-full justify-around items-center overflow-hidden transition-all duration-500 ease-in-out ${
@@ -10,8 +9,7 @@ export function GenreDetail({ genre, isHidden }) {
       }`}
       style={{ maxHeight: isHidden ? '0' : '100%' }}
     >
-      <GenreProsCons name={genre.name} pros={genre.prosPercent} cons={genre.consPercent} isHidden={isHidden} />
-      <UserComment comment={genre.bestComment} />
+      <GenreProsCons name={genreList.name} cons={genreList.count} isHidden={isHidden} total={total} />
     </div>
   );
 }
@@ -26,26 +24,20 @@ function UserComment({ comment }) {
   );
 }
 
-function GenreProsCons({ name, pros, cons, isHidden }) {
-  const total = pros + cons;
-  const prosWidth = `calc(${(pros / total) * 100}%)`;
+function GenreProsCons({ name, cons, isHidden, total }) {
   const consWidth = `calc(${(cons / total) * 100}%)`;
-
-  const [prosStyleWidth, setProsStyleWidth] = useState(isHidden ? '0' : prosWidth);
   const [consStyleWidth, setConsStyleWidth] = useState(isHidden ? '0' : consWidth);
 
   useEffect(() => {
     if (isHidden) {
-      setProsStyleWidth('0');
       setConsStyleWidth('0');
     } else {
       const timer = setTimeout(() => {
-        setProsStyleWidth(prosWidth);
         setConsStyleWidth(consWidth);
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [isHidden, prosWidth, consWidth]);
+  }, [isHidden, consWidth]);
 
   return (
     <div className="flex-col items-center w-[100px]">
@@ -55,12 +47,8 @@ function GenreProsCons({ name, pros, cons, isHidden }) {
           style={{ width: consStyleWidth }}
           className={`h-full bg-[#ffffa5] transition-all duration-500 ease-in-out`}
         ></div>
-
-        {/* <div
-          style={{ width: prosStyleWidth }}
-          className={`h-full bg-[#dbdbdb] transition-all duration-500 ease-in-out`}
-        ></div> */}
       </div>
+      <div>{cons}</div>
     </div>
   );
 }
