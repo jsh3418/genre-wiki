@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { MainPage } from './pages/MainPage';
-import { SearchPage } from './pages/SearchPage';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Header } from './components/Header';
 import { AuthPage } from './pages/AuthPage';
-import { useEffect, useState } from 'react';
+import { MainPage } from './pages/MainPage';
+import { MyPage } from './pages/MyPage';
+import { SearchPage } from './pages/SearchPage';
 
 export function App() {
   const [userId, setUserId] = useState('');
@@ -24,6 +25,7 @@ export function App() {
         </Route>
         <Route path="/login" element={<AuthPage setUserId={setUserId} />} />
         <Route path="/sign-up" element={<AuthPage setUserId={setUserId} />} />
+        <Route path="/my-page" element={<MyPage userId={userId} />} />
       </Routes>
     </BrowserRouter>
   );

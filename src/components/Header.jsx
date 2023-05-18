@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { SearchBar } from './SearchBar';
 import { useNavigate } from 'react-router-dom';
+import { SearchBar } from './SearchBar';
 
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -20,16 +20,25 @@ export function Header() {
       <SearchBar />
       <div className="left-[350px] top-[-135px] gap-[8px] relative flex">
         {isLogin ? (
-          <button
-            className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+          <>
+            <button
+              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
         justify-center items-center h-[25px] bg-[#FFFF64]  flex"
-            onClick={() => {
-              localStorage.removeItem('userId');
-              navigate('/');
-            }}
-          >
-            로그아웃
-          </button>
+              onClick={() => {
+                localStorage.removeItem('userId');
+                navigate('/');
+              }}
+            >
+              로그아웃
+            </button>
+            <button
+              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+  justify-center items-center h-[25px] bg-[#FFFF64]  flex"
+              onClick={() => navigate('/my-page')}
+            >
+              마이 장르
+            </button>
+          </>
         ) : (
           <>
             <button
