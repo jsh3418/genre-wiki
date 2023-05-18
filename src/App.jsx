@@ -7,10 +7,13 @@ import { useEffect, useState } from 'react';
 
 export function App() {
   const [userId, setUserId] = useState('');
+
   useEffect(() => {
     const id = localStorage.getItem('userId') ?? '';
+
     setUserId(id);
   }, []);
+
   return (
     <BrowserRouter>
       <Header />
