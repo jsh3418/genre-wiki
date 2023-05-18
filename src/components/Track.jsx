@@ -64,17 +64,15 @@ export function Track({ track, userData, index, userId }) {
     const newUserData = Object.assign(userData);
 
     if (isVoted) {
-      if (newUserData.votedGenre[track.id].length === 1) {
+      newUserData.votedGenre[track.id] = newUserData.votedGenre[track.id].filter((genre) => genre !== name);
+
+      if (newUserData.votedGenre[track.id].length === 0) {
         delete newUserData.votedGenre[track.id];
-      } else {
-        newUserData.votedGenre[track.id] = newUserData.votedGenre[track.id].filter((genre) => genre !== name);
       }
+    } else if (newUserData.votedGenre.hasOwnProperty(track.id)) {
+      newUserData.votedGenre[track.id].push(name);
     } else {
-      if (newUserData.votedGenre.hasOwnProperty(track.id)) {
-        newUserData.votedGenre[track.id].push(name);
-      } else {
-        newUserData.votedGenre[track.id] = [name];
-      }
+      newUserData.votedGenre[track.id] = [name];
     }
 
     updateDoc(usersRef, newUserData);
