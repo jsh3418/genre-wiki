@@ -1,38 +1,10 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { db } from '../firebase';
-import { GenreDetail } from './GenreDetails';
+import { doc } from 'firebase/firestore';
 import { TrackInfo } from './TrackInfo';
+import { GenreDetail } from './GenreDetails';
 
-export function TrackList({ data, userId }) {
-  const sortedData = data.sort((a, b) => b.totalCount - a.totalCount);
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    if (userId) {
-      const ref = doc(db, 'users', userId);
-
-      (async () => {
-        const querySnapshot = await getDoc(ref);
-        const querySnapshotData = querySnapshot.data();
-
-        setUserData(querySnapshotData);
-      })();
-    }
-  }, [userId]);
-
-  return (
-    <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
-      <ul className="grid gap-[30px] mx-auto">
-        {sortedData.map((track, index) => (
-          <Track track={track} userData={userData} key={index} userId={userId} />
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function Track({ track, userData, index, userId }) {
+export function Track({ track, userData, index, userId }) {
   const [isHidden, setIsHidden] = useState(true);
   const [genreList, setGenreList] = useState(track.genre);
 
