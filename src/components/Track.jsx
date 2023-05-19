@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { db } from '../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
-import { TrackInfo } from './TrackInfo';
-import { GenreDetail } from './GenreDetails';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../firebase';
+import { GenreDetail } from './GenreDetails';
+import { TrackInfo } from './TrackInfo';
 
-export function Track({ track, userData, index, userId }) {
+export function Track({ track, genreDescription, userData, index, userId }) {
   const [isHidden, setIsHidden] = useState(true);
   const [genreList, setGenreList] = useState(track.genre);
   const navigate = useNavigate();
@@ -120,7 +120,15 @@ export function Track({ track, userData, index, userId }) {
         )}
         <div className={`detail-list  ${isHidden ? '' : 'mt-[25px]'}`}>
           {genreList.map((data, index) => {
-            return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
+            return (
+              <GenreDetail
+                isHidden={isHidden}
+                description={genreDescription[data.name]}
+                genreList={data}
+                key={index}
+                total={track.totalCount}
+              />
+            );
           })}
         </div>
       </div>
