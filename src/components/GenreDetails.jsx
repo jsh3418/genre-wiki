@@ -40,7 +40,7 @@ function GenreProsCons({ name, description, cons, isHidden, total }) {
   return (
     <div className="flex">
       <div className="flex flex-col items-start justify-center px-[15px] my-[5px]  w-[180px]">
-        <span className="flex justify-start font-[500]">{name}</span>
+        <span className="flex justify-start italic text-[16px] font-[500]">{name}</span>
         <div
           className={`flex relative justify-between items-center w-[150px] 
         border-[#878787]  rounded-[6px] h-8 hover:scale-[115%] transition duration-[300]
@@ -56,7 +56,7 @@ function GenreProsCons({ name, description, cons, isHidden, total }) {
           {cons}
         </div>
       </div>
-      <div className="mx-auto w-[470px] pt-[24px] font-[200] text-[15px] py-[20px] px-[15px]">{description}</div>
+      <div className="mx-auto w-[470px] pt-[24px] font-[300] text-[15px] py-[20px] px-[15px]">{description}</div>
     </div>
   );
 }

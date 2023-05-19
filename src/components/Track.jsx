@@ -146,7 +146,8 @@ function GenreButton({ name, index, clickEventHandler, voted }) {
       key={index}
       onClick={handleGenreButtonClick}
       className={`flex justify-center text-[15px] w-[100px]
-      hover:scale-[113%] transition duration-[300]
+      hover:scale-[113%] transition duration-[300] ${voted ? 'font-[300]' : 'font-[200]'}
+      ${voted ? 'italic' : ''}
       border-[1px] rounded-[25px] border-[#243c5a] ${voted ? 'bg-[#FFFF64]' : 'bg-[white]'}`}
     >
       {name}
