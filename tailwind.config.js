@@ -2,6 +2,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        taebaek: ['TAEBAEKmilkyway', 'sans-serif'],
+      },
       animation: {
         shake: 'shake 0.5s ease-in-out infinite',
       },

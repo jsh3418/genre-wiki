@@ -14,8 +14,8 @@ export function Header({ setUserId, setUserData }) {
 
   return (
     <header className=" flex flex-col justify-center items-center">
-      <div className="text-[50px] my-[25px] cursor-pointer" onClick={() => navigate('/')}>
-        GENRE WIKI
+      <div className="font-taebaek text-[50px] my-[25px] cursor-pointer" onClick={() => navigate('/')}>
+        딱 러 말해
       </div>
       <SearchBar />
       <div className="left-[350px] top-[-135px] gap-[8px] relative flex">
