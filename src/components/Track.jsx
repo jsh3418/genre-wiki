@@ -118,7 +118,7 @@ export function Track({ track, userData, index, userId }) {
             Total {track.totalCount}
           </div>
         )}
-        <div className={`detail-list  mt-${isHidden ? '' : '[30px]'}`}>
+        <div className={`detail-list  ${isHidden ? '' : 'mt-[25px]'}`}>
           {genreList.map((data, index) => {
             return <GenreDetail isHidden={isHidden} genreList={data} key={index} total={track.totalCount} />;
           })}

@@ -22,7 +22,7 @@ export function Header({ setUserId, setUserData }) {
         {isLogin ? (
           <>
             <button
-              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
         justify-center items-center h-[25px] bg-[#FFFF64]  flex"
               onClick={() => {
                 setUserId('');
@@ -31,31 +31,31 @@ export function Header({ setUserId, setUserData }) {
                 navigate('/');
               }}
             >
-              로그아웃
+              LOGOUT
             </button>
             <button
-              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[80px]
   justify-center items-center h-[25px] bg-[#FFFF64]  flex"
               onClick={() => navigate('/my-page')}
             >
-              마이 장르
+              MY GENRE
             </button>
           </>
         ) : (
           <>
             <button
-              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
         justify-center items-center h-[25px] bg-[#FFFF64] flex"
               onClick={() => navigate('/sign-up')}
             >
-              회원가입
+              SIGN UP
             </button>
             <button
-              className="font-[5] font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
+              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
           justify-center items-center h-[25px] bg-[#FFFF64] flex"
               onClick={() => navigate('/login')}
             >
-              로그인
+              LOGIN
             </button>
           </>
         )}

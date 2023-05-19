@@ -18,15 +18,6 @@ function GenreProsCons({ name, cons, isHidden, total }) {
   const [consStyleWidth, setConsStyleWidth] = useState(isHidden ? '0' : consWidth);
   const consPercent = ((cons / total) * 100).toFixed(0) + '%';
 
-  const [hover, setHover] = useState(false);
-  const handleHover = (e) => {
-    if (e.type === 'mouseenter') {
-      setHover(true);
-    } else if (e.type === 'mouseleave') {
-      setHover(false);
-    }
-  };
-
   useEffect(() => {
     if (isHidden) {
       setConsStyleWidth('0');
