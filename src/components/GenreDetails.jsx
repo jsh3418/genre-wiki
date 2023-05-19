@@ -20,9 +20,10 @@ export function GenreDetail({ genreList, description, isHidden, total }) {
 }
 
 function GenreProsCons({ name, description, cons, isHidden, total }) {
-  const consWidth = `calc(${(cons / total) * 100}%)`;
+  const divideValue = cons / total || 0;
+  const consWidth = `calc(${divideValue * 100}%)`;
   const [consStyleWidth, setConsStyleWidth] = useState(isHidden ? '0' : consWidth);
-  const consPercent = ((cons / total) * 100).toFixed(0) + '%';
+  const consPercent = (divideValue * 100).toFixed(0) + '%';
 
   useEffect(() => {
     if (isHidden) {
