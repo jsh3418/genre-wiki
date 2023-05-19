@@ -40,7 +40,7 @@ function MyVote({ votedGenre }) {
   }));
 
   return (
-    <div className="container flex mx-auto">
+    <div className="animate-appear container flex mx-auto">
       <div className="flex mx-auto mt-[25px]">
         <div className="flex border-[2px] border-[#cecece] rounded-[6px] py-[25px] px-[20px] text-[15px] flex-col font-[300] gap-[25px] ">
           <button
@@ -105,42 +105,52 @@ function PieChart({ genres }) {
     const dataReady = pie(genres);
 
     const color = d3
-      .scaleOrdinal() // Use scaleOrdinal for discrete color interpolators
+      .scaleOrdinal()
       .domain([0, d3.max(genres, (g) => g.count)])
       .range(d3.schemeSet1);
 
     const arc = d3.arc().innerRadius(50).outerRadius(75);
-    const hoverArc = d3.arc().innerRadius(50).outerRadius(80); // arc for hover effect
+    const hoverArc = d3.arc().innerRadius(50).outerRadius(80);
 
-    const g = svg
-      .attr('width', 300)
-      .attr('height', 300)
-      .selectAll('g')
-      .data(dataReady)
-      .join('g')
-      .attr('transform', 'translate(150, 150)');
-
-    g.append('path')
-      .attr('d', arc)
-      .attr('stroke', 'white')
-      .style('stroke-width', '5px')
-      .style('opacity', 0.3)
-      // .style('opacity', (d) => (d.data.name === activePie ? 0.7 : 0.5))
-      .on('mouseenter', (d, genre) => {
-        d3.select(d.currentTarget).transition().duration(200).attr('d', hoverArc).style('opacity', 1); // change arc radius on hover
-        setActivePie(genre.data.name);
-        setActivePieCount(genre.data.count);
-      })
-      .on('mouseleave', (d) => {
-        d3.select(d.currentTarget).transition().duration(200).attr('d', arc).style('opacity', 0.3); // revert to normal arc radius
-        setActivePie(null);
-        setActivePieCount(null);
-      })
-      .attr('fill', (d) => color(d.data.count));
-
-    return () => {
-      g.selectAll().remove();
-    };
+    setTimeout(() => { // Add timeout
+      const g = svg
+        .attr('width', 300)
+        .attr('height', 300)
+        .selectAll('g')
+        .data(dataReady)
+        .join('g')
+        .attr('transform', 'translate(150, 150)');
+  
+      g.append('path')
+        .attr('d', arc)
+        .attr('stroke', 'white')
+        .style('stroke-width', '5px')
+        .style('opacity', 0.3)
+        .on('mouseenter', (d, genre) => {
+          d3.select(d.currentTarget).transition().duration(200).attr('d', hoverArc).style('opacity', 1);
+          setActivePie(genre.data.name);
+          setActivePieCount(genre.data.count);
+        })
+        .on('mouseleave', (d) => {
+          d3.select(d.currentTarget).transition().duration(200).attr('d', arc).style('opacity', 0.3);
+          setActivePie(null);
+          setActivePieCount(null);
+        })
+        .attr('fill', (d) => color(d.data.count))
+        .transition()
+        .duration(1000)
+        .attrTween('d', function(d) {
+          var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+          return function(t) {
+            d.endAngle = i(t);
+            return arc(d);
+          }
+        });
+  
+      return () => {
+        g.selectAll().remove();
+      };
+    }, 1000); // 1 second delay
   }, []);
 
   return (

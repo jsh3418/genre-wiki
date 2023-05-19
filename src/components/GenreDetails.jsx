@@ -53,7 +53,7 @@ function GenreProsCons({ name, description, cons, isHidden, total }) {
           <div className="absolute right-[10px] italic  font-[500]">{consPercent}</div>
         </div>
         <div className="cons-num italic flex justify-center relative text-[#595959] mt-[4px] items-center text-[12px]">
-          {cons}
+          {`${cons} votes`}
         </div>
       </div>
       <div className="mx-auto w-[470px] pt-[24px] font-[300] text-[15px] py-[20px] px-[15px]">{description}</div>

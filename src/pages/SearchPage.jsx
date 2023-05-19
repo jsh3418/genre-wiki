@@ -28,9 +28,9 @@ export function SearchPage({ userData, userId, genreDescription }) {
 
   return (
     <div>
-      <div className="relative mt-[10px] mb-[200px] mx-auto relative flex flex-col justify-center items-center top-[40px]">
+      <div className="animate-appear relative mt-[10px] mb-[200px] mx-auto relative flex flex-col justify-center items-center top-[40px]">
         <ul className="grid gap-[30px] mx-auto">
-          <div className="animate-appear absolute italic font-[200] text-[20px] left-[350px] top-[-50px]">
+          <div className="animate-appear absolute italic font-[200] text-[20px] left-[180px] top-[-50px]">
             Total {searchData.length}{' '}
           </div>
           {searchData.length > 0 ? (
@@ -47,7 +47,9 @@ export function SearchPage({ userData, userId, genreDescription }) {
             })
           ) : (
             <>
-              <div>검색 결과 없음</div>
+              <div>
+                <div>검색 결과 없음</div>
+              </div>
               <Modal />
             </>
           )}

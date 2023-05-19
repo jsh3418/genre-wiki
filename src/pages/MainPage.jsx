@@ -21,7 +21,7 @@ export function MainPage({ userData, userId, genreDescription }) {
   }, []);
 
   return (
-    <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
+    <div className="animate-appear mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
         {sortedData.map((track, index) => (
           <Track track={track} genreDescription={genreDescription} userData={userData} key={index} userId={userId} />

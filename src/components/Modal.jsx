@@ -51,12 +51,36 @@ export function Modal() {
   return (
     <>
       <button onClick={openDialog}>노래 추가 하기</button>
-      <dialog ref={dialog}>
-        <h2>노래 추가</h2>
-        artist: <input type="text" onChange={(event) => setArtist(event.target.value)} value={artist} />
-        track : <input type="text" onChange={(event) => setTrack(event.target.value)} value={track} />
-        <button onClick={addTrack}>Add</button>
-        <button onClick={closeDialog}>Close</button>
+      <dialog ref={dialog} className=" rounded-[5px]">
+        <div className="animate-fade-in-out py-[20px] px-[35px] gap-[30px] w-[350px] font-[200] text-[15px] flex flex-col">
+          <h2 className="mx-auto text-[17upx] font-[400]">노래 추가</h2>
+          <div className="relative mx-auto left-[-15spx] flex gap-[15px]">
+            artist{' '}
+            <input
+              className="font-[100] w-[160px] border-[1px] rounded-[4px]"
+              type="text"
+              onChange={(event) => setArtist(event.target.value)}
+              value={artist}
+            />
+          </div>
+          <div className="relative mx-auto left-[-15spx] flex gap-[15px]">
+            track{' '}
+            <input
+              className="font-[100] w-[160px] border-[1px] rounded-[4px]"
+              type="text"
+              onChange={(event) => setTrack(event.target.value)}
+              value={track}
+            />
+          </div>
+          <div className="flex mx-auto gap-[10px]">
+            <button onClick={addTrack} className="font-[700] rounded-[6px] w-[80px] h-[35px] bg-[#ffff87]">
+              ADD
+            </button>
+            <button onClick={closeDialog} className="font-[700] rounded-[6px] w-[80px] h-[35px] bg-[#ffff87]">
+              CLOSE
+            </button>
+          </div>
+        </div>
       </dialog>
     </>
   );
