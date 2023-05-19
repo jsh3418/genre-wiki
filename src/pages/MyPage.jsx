@@ -1,6 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { db } from '../firebase';
+import * as d3 from 'd3';
 
 export function MyPage({ userId }) {
   const [userData, setUserData] = useState({});
@@ -28,26 +29,128 @@ function MyVote({ votedGenre }) {
     genres.forEach((genre) => (userGenre[genre] ? (userGenre[genre] += 1) : (userGenre[genre] = 1)));
   }
 
+  const pieData = Object.entries(userGenre).map(([name, count]) => ({
+    name,
+    count,
+  }));
+
+  console.log(pieData);
+
   return (
-    <>
-      <div>
-        <div>내가 투표한 장르들 순위 보여주기</div>
-        {Object.entries(userGenre).map(([name, count], index) => (
-          <MyGenres name={name} count={count} key={index} />
-        ))}
+    <div className="container flex mx-auto">
+      <div className="flex mx-auto mt-[25px]">
+        <div className="flex border-[2px] border-[#cecece] rounded-[6px] py-[25px] px-[20px] text-[15px] flex-col font-[300] gap-[25px] ">
+          <button
+            className="flex text-[10px] font-[200] rounded-[8px] h-[20px] items-center 
+          justify-center border-[1px] border-[#3f3f3f] w-[85px]
+          shadow-[0_4px_24px_rgba(48,62,75,.06)]"
+          >
+            MY GENRE
+          </button>
+          <button
+            className="flex text-[10px] font-[200] rounded-[8px] h-[20px] items-center 
+          justify-center border-[1px] border-[#3f3f3f] w-[85px]
+          shadow-[0_4px_24px_rgba(48,62,75,.06)]"
+          >
+            MY TRACK
+          </button>
+        </div>
+        <div
+          className="border-[2px] border-[#cecece]
+        w-[500px] rounded-[6px] py-[25px] px-[25px]  h-[310px] ml-[20px] "
+        >
+          <div className="flex flex-wrap p-[5px] justify-center content-evenly gap-x-12 gap-y-2 ">
+            {Object.entries(userGenre)
+              .sort((a, b) => b[1] - a[1])
+              .map(([name, count], index) => (
+                <MyGenres name={name} count={count} key={index} />
+              ))}
+          </div>
+          <div>
+            <PieChart genres={pieData} />
+          </div>
+        </div>
       </div>
-      <div>
-        <h1>내가 장르 투표한 트랙 리스트</h1>
-      </div>
-    </>
+    </div>
   );
 }
 
 function MyGenres({ name, count }) {
   return (
-    <div>
-      <h1>{name}</h1>
-      <h2>{count}</h2>
+    <div className="flex flex-col">
+      <h1
+        className="italic font-[300] flex justify-center text-[12px] w-[100px] h-[20px]
+      transition duration-[300] font-[200] 
+      border-[1px] rounded-[25px] border-[#243c5a] bg-[white]"
+      >
+        {name}
+      </h1>
+      <h2 className="mx-auto italic text-[8px] ">{count}</h2>
+    </div>
+  );
+}
+
+function PieChart({ genres }) {
+  const ref = useRef();
+
+  const [activePie, setActivePie] = useState(null);
+  const [activePieCount, setActivePieCount] = useState(null);
+
+  useEffect(() => {
+    const svg = d3.select(ref.current);
+    const pie = d3.pie().value((d) => d.count);
+    const dataReady = pie(genres);
+
+    const color = d3
+      .scaleOrdinal() // Use scaleOrdinal for discrete color interpolators
+      .domain([0, d3.max(genres, (g) => g.count)])
+      .range(d3.schemeSet1);
+
+    const arc = d3.arc().innerRadius(50).outerRadius(75);
+    const hoverArc = d3.arc().innerRadius(50).outerRadius(80); // arc for hover effect
+
+    const g = svg
+      .attr('width', 300)
+      .attr('height', 300)
+      .selectAll('g')
+      .data(dataReady)
+      .join('g')
+      .attr('transform', 'translate(150, 150)');
+
+    g.append('path')
+      .attr('d', arc)
+      .attr('stroke', 'white')
+      .style('stroke-width', '5px')
+      .style('opacity', 0.3)
+      // .style('opacity', (d) => (d.data.name === activePie ? 0.7 : 0.5))
+      .on('mouseenter', (d, genre) => {
+        d3.select(d.currentTarget).transition().duration(200).attr('d', hoverArc).style('opacity', 1); // change arc radius on hover
+        setActivePie(genre.data.name);
+        setActivePieCount(genre.data.count);
+      })
+      .on('mouseleave', (d) => {
+        d3.select(d.currentTarget).transition().duration(200).attr('d', arc).style('opacity', 0.3); // revert to normal arc radius
+        setActivePie(null);
+        setActivePieCount(null);
+      })
+      .attr('fill', (d) => color(d.data.count));
+
+    return () => {
+      g.selectAll().remove();
+    };
+  }, []);
+
+  return (
+    <div className="flex justify-center items-center relative left-[0px] top-[-60px] ">
+      <svg ref={ref} />
+      <div className="absolute center z-100">
+        {activePie && (
+          <div>
+            <div className="italic font-[300] text-[15px]">{activePie}</div>
+            {/* <div>{activePieCount}</div> */}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
