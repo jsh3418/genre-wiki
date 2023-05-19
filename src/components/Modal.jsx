@@ -2,12 +2,14 @@ import React, { useRef, useState } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, setDoc, doc } from 'firebase/firestore';
 import { getTrackData } from '../API/getTrackData';
+import { useNavigate } from 'react-router-dom';
 
 export function Modal() {
   const [artist, setArtist] = useState('');
   const [track, setTrack] = useState('');
   const [tracksData, setTracksData] = useState([]);
   const dialog = useRef();
+  const navigate = useNavigate();
 
   (async () => {
     const querySnapshot = await getDocs(collection(db, 'tracks'));
@@ -46,6 +48,7 @@ export function Modal() {
 
     setDoc(doc(db, 'tracks', newTrackData.id), newTrackData);
     closeDialog();
+    navigate(`/search/${track}`);
   };
 
   return (
