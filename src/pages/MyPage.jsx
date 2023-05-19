@@ -112,7 +112,8 @@ function PieChart({ genres }) {
     const arc = d3.arc().innerRadius(50).outerRadius(75);
     const hoverArc = d3.arc().innerRadius(50).outerRadius(80);
 
-    setTimeout(() => { // Add timeout
+    setTimeout(() => {
+      // Add timeout
       const g = svg
         .attr('width', 300)
         .attr('height', 300)
@@ -120,7 +121,7 @@ function PieChart({ genres }) {
         .data(dataReady)
         .join('g')
         .attr('transform', 'translate(150, 150)');
-  
+
       g.append('path')
         .attr('d', arc)
         .attr('stroke', 'white')
@@ -139,14 +140,14 @@ function PieChart({ genres }) {
         .attr('fill', (d) => color(d.data.count))
         .transition()
         .duration(1000)
-        .attrTween('d', function(d) {
-          var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-          return function(t) {
+        .attrTween('d', function (d) {
+          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+          return function (t) {
             d.endAngle = i(t);
             return arc(d);
-          }
+          };
         });
-  
+
       return () => {
         g.selectAll().remove();
       };

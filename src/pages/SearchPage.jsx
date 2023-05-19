@@ -29,20 +29,22 @@ export function SearchPage({ userData, userId, genreDescription }) {
   return (
     <div>
       <div className="animate-appear relative mt-[10px] mb-[200px] mx-auto relative flex flex-col justify-center items-center top-[40px]">
-        <ul className="grid gap-[30px] mx-auto">
-          <div className="animate-appear absolute italic font-[200] text-[20px] left-[180px] top-[-50px]">
-            Total {searchData.length}{' '}
-          </div>
+        <ul className="relative grid gap-[30px] mx-auto">
           {searchData.length > 0 ? (
             searchData.map((track, index) => {
               return (
-                <Track
-                  track={track}
-                  genreDescription={genreDescription}
-                  userData={userData}
-                  key={index}
-                  userId={userId}
-                />
+                <>
+                  <div className="animate-appear absolute italic font-[200] text-[20px] left-[30px] top-[-50px]">
+                    Total {searchData.length}{' '}
+                  </div>
+                  <Track
+                    track={track}
+                    genreDescription={genreDescription}
+                    userData={userData}
+                    key={index}
+                    userId={userId}
+                  />
+                </>
               );
             })
           ) : (
