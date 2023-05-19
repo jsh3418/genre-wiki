@@ -27,25 +27,37 @@ export function SearchPage({ userData, userId, genreDescription }) {
 
   return (
     <div>
-      <div>전체 {searchData.length} 개</div>
-      {id ? (
-        searchData.map((track, index) => {
-          return (
-            <Track track={track} genreDescription={genreDescription} userData={userData} key={index} userId={userId} />
-          );
-        })
-      ) : (
-        <>
-          <div>검색 결과 없음</div>
-          <button
-            onClick={() => {
-              alert('hi');
-            }}
-          >
-            노래 추가 하기
-          </button>
-        </>
-      )}
+      <div className="relative mt-[10px] mb-[200px] mx-auto relative flex flex-col justify-center items-center top-[40px]">
+        <ul className="grid gap-[30px] mx-auto">
+          <div className="animate-appear absolute italic font-[200] text-[20px] left-[350px] top-[-50px]">
+            Total {searchData.length}{' '}
+          </div>
+          {id ? (
+            searchData.map((track, index) => {
+              return (
+                <Track
+                  track={track}
+                  genreDescription={genreDescription}
+                  userData={userData}
+                  key={index}
+                  userId={userId}
+                />
+              );
+            })
+          ) : (
+            <>
+              <div>검색 결과 없음</div>
+              <button
+                onClick={() => {
+                  alert('hi');
+                }}
+              >
+                노래 추가 하기
+              </button>
+            </>
+          )}
+        </ul>
+      </div>
     </div>
   );
 }

@@ -14,16 +14,19 @@ export function Header({ setUserId, setUserData }) {
 
   return (
     <header className=" flex flex-col justify-center items-center">
-      <div className="font-taebaek text-[50px] my-[25px] cursor-pointer" onClick={() => navigate('/')}>
-        딱 러 말해
+      <div
+        className="font-suit font-extra-light my-[50px] text-[35px] my-[25px] cursor-pointer"
+        onClick={() => navigate('/')}
+      >
+        딱 좐러 말해
       </div>
       <SearchBar />
-      <div className="left-[350px] top-[-135px] gap-[8px] relative flex">
+      <div className="left-[280px] top-[-165px] gap-[8px] relative flex">
         {isLogin ? (
           <>
             <button
-              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
-        justify-center items-center h-[25px] bg-[#FFFF64]  flex"
+              className="font-normal font-black text-[6px] font-[200] border-[1.1px] border-[#424242] rounded-[10px] w-[60px]
+        justify-center items-center h-[20px] bg-[#FFFF64]  flex"
               onClick={() => {
                 setUserId('');
                 setUserData({});
@@ -34,8 +37,8 @@ export function Header({ setUserId, setUserData }) {
               LOGOUT
             </button>
             <button
-              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[80px]
-  justify-center items-center h-[25px] bg-[#FFFF64]  flex"
+              className="font-normal font-black text-[6px] font-[200] border-[1.1px] border-[#424242] rounded-[10px] w-[70px]
+  justify-center items-center h-[20px] bg-[#FFFF64]  flex"
               onClick={() => navigate('/my-page')}
             >
               MY GENRE
@@ -44,15 +47,15 @@ export function Header({ setUserId, setUserData }) {
         ) : (
           <>
             <button
-              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
-        justify-center items-center h-[25px] bg-[#FFFF64] flex"
+              className="font-normal font-black text-[6px] font-[200] border-[1.1px] border-[#424242] rounded-[10px] w-[60px]
+        justify-center items-center h-[20px] bg-[#FFFF64] flex"
               onClick={() => navigate('/sign-up')}
             >
               SIGN UP
             </button>
             <button
-              className="font-normal font-black text-[12px] border-[1.3px] border-[#424242] rounded-[4px] w-[65px]
-          justify-center items-center h-[25px] bg-[#FFFF64] flex"
+              className="font-normal font-black text-[6px] font-[200] border-[1.1px] border-[#424242] rounded-[10px] w-[60px]
+          justify-center items-center h-[20px] bg-[#FFFF64] flex"
               onClick={() => navigate('/login')}
             >
               LOGIN
