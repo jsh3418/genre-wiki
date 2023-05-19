@@ -1,11 +1,16 @@
+import * as d3 from 'd3';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
 import { db } from '../firebase';
-import * as d3 from 'd3';
 
-export function MyPage({ userId }) {
+export function MyPage() {
   const [userData, setUserData] = useState({});
-  const [trackData, setTrackData] = useState([]);
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const id = localStorage.getItem('userId') ?? '';
+    setUserId(id);
+  }, []);
 
   useEffect(() => {
     if (userId) {
@@ -17,7 +22,7 @@ export function MyPage({ userId }) {
         setUserData(querySnapshotData);
       })();
     }
-  }, []);
+  }, [userId]);
 
   return <>{userData.votedGenre && <MyVote votedGenre={userData.votedGenre} />}</>;
 }
@@ -33,8 +38,6 @@ function MyVote({ votedGenre }) {
     name,
     count,
   }));
-
-  console.log(pieData);
 
   return (
     <div className="container flex mx-auto">
@@ -147,7 +150,6 @@ function PieChart({ genres }) {
         {activePie && (
           <div>
             <div className="italic font-[300] text-[15px]">{activePie}</div>
-            {/* <div>{activePieCount}</div> */}
           </div>
         )}
       </div>

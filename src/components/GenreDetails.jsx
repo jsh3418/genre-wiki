@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function GenreDetail({ genreList, isHidden, total }) {
+export function GenreDetail({ genreList, description, isHidden, total }) {
   return (
     <div
       className={`flex mx-auto w-full justify-around items-center overflow-hidden transition-all duration-500 ease-in-out ${
@@ -8,12 +8,18 @@ export function GenreDetail({ genreList, isHidden, total }) {
       }`}
       style={{ maxHeight: isHidden ? '0' : '100%' }}
     >
-      <GenreProsCons name={genreList.name} cons={genreList.count} isHidden={isHidden} total={total} />
+      <GenreProsCons
+        name={genreList.name}
+        description={description}
+        cons={genreList.count}
+        isHidden={isHidden}
+        total={total}
+      />
     </div>
   );
 }
 
-function GenreProsCons({ name, cons, isHidden, total }) {
+function GenreProsCons({ name, description, cons, isHidden, total }) {
   const consWidth = `calc(${(cons / total) * 100}%)`;
   const [consStyleWidth, setConsStyleWidth] = useState(isHidden ? '0' : consWidth);
   const consPercent = ((cons / total) * 100).toFixed(0) + '%';
@@ -49,9 +55,7 @@ function GenreProsCons({ name, cons, isHidden, total }) {
           {cons}
         </div>
       </div>
-      <div className="mx-auto w-[470px] pt-[24px] font-[200] text-[15px] py-[20px] px-[15px]">
-        deep house는 느린 4/4 박자 리듬과 재즈 영향을 받은 멜로디를 특징으로 합니다."
-      </div>
+      <div className="mx-auto w-[470px] pt-[24px] font-[200] text-[15px] py-[20px] px-[15px]">{description}</div>
     </div>
   );
 }

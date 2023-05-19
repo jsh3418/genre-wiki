@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { Track } from '../components/Track';
+import { db } from '../firebase';
 
-export function MainPage({ userData, userId }) {
+export function MainPage({ userData, userId, genreDescription }) {
   const [tracksData, setTracksData] = useState([]);
   const sortedData = tracksData.sort((a, b) => b.totalCount - a.totalCount);
 
@@ -24,7 +24,7 @@ export function MainPage({ userData, userId }) {
     <div className="mt-[10px] mb-[200px] mx-auto relative flex justify-center items-center top-[40px]">
       <ul className="grid gap-[30px] mx-auto">
         {sortedData.map((track, index) => (
-          <Track track={track} userData={userData} key={index} userId={userId} />
+          <Track track={track} genreDescription={genreDescription} userData={userData} key={index} userId={userId} />
         ))}
       </ul>
     </div>
