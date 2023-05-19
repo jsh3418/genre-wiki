@@ -36,7 +36,7 @@ export function App() {
       <Header setUserId={setUserId} setUserData={setUserData} />
       <Routes>
         <Route path="/" element={<MainPage userData={userData} userId={userId} />} />
-        <Route path="/search" element={<SearchPage />}>
+        <Route path="/search" element={<SearchPage userData={userData} userId={userId} />}>
           <Route path="/search/:id" element={<SearchPage />} />
         </Route>
         <Route path="/login" element={<AuthPage setUserId={setUserId} />} />
