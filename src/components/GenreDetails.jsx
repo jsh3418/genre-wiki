@@ -35,15 +35,15 @@ function GenreProsCons({ name, cons, isHidden, total }) {
       <div className="flex flex-col items-start justify-center px-[15px] my-[5px]  w-[180px]">
         <span className="flex justify-start font-[500]">{name}</span>
         <div
-          className={`flex justify-between items-center w-[150px] 
-        border-[#6d6d6d]  rounded-[6px] h-8 hover:scale-[115%] transition duration-[300]
+          className={`flex relative justify-between items-center w-[150px] 
+        border-[#878787]  rounded-[6px] h-8 hover:scale-[115%] transition duration-[300]
         overflow-hidden border-[1.2px]`}
         >
           <div
             style={{ width: consStyleWidth }}
             className={`h-full bg-[#ffffa5] transition-all duration-500 ease-in-out`}
           ></div>
-          <div className="relative right-[10px] italic  font-[500]">{consPercent}</div>
+          <div className="absolute right-[10px] italic  font-[500]">{consPercent}</div>
         </div>
         <div className="cons-num italic flex justify-center relative text-[#595959] mt-[4px] items-center text-[12px]">
           {cons}
