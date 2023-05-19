@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Track } from '../components/Track';
 import { db } from '../firebase';
+import { Modal } from '../components/Modal';
 export function SearchPage({ userData, userId, genreDescription }) {
   const [searchData, setSearchData] = useState([]);
   const { id } = useParams();
@@ -32,7 +33,7 @@ export function SearchPage({ userData, userId, genreDescription }) {
           <div className="animate-appear absolute italic font-[200] text-[20px] left-[350px] top-[-50px]">
             Total {searchData.length}{' '}
           </div>
-          {id ? (
+          {searchData.length > 0 ? (
             searchData.map((track, index) => {
               return (
                 <Track
@@ -47,13 +48,7 @@ export function SearchPage({ userData, userId, genreDescription }) {
           ) : (
             <>
               <div>검색 결과 없음</div>
-              <button
-                onClick={() => {
-                  alert('hi');
-                }}
-              >
-                노래 추가 하기
-              </button>
+              <Modal />
             </>
           )}
         </ul>
